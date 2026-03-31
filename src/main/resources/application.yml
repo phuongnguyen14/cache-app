@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: cache-app
+
+  cache:
+    type: redis
+    cache-names: userCache,postCache
+    redis:
+      time-to-live: 10m
+      cache-null-values: false
+      key-prefix: "cache-app::"
+
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+      username: ${REDIS_USERNAME}
+      password: ${REDIS_PASSWORD}
+      timeout: ${REDIS_TIMEOUT}
+
+  datasource:
+    url: ${POSTGRES_URL}
+    username: ${POSTGRES_USERNAME}
+    password: ${POSTGRES_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+server:
+  port: ${PORT:8080}
+
+logging:
+  level:
+    org.springframework.cache: TRACE
+    org.hibernate.SQL: DEBUG
